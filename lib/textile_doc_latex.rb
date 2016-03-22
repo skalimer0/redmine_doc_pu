@@ -32,7 +32,7 @@ module RedCloth::Formatters::LATEX_EX
 
 	def table_close(opts)
 		output = "\\begin{savenotes}\n"
-		output << "\\begin{table}[H]\n"
+		output << "\\begin{table}[h]\n"
 		output << "  \\centering\n"
 		cols = 'X' * @table[0].size if not draw_table_border_latex
 		cols = '|' + 'X|' * @table[0].size if draw_table_border_latex
@@ -58,7 +58,7 @@ module RedCloth::Formatters::LATEX_EX
 		# Resolve CSS styles if any have been set
 		styling = opts[:class].to_s.split(/\s+/).collect { |style| latex_image_styles[style] }.compact.join ','
 		# Build latex code
-		[ "\\begin{figure}[#{(opts[:align].nil? ? 'H' : 'htb')}]",
+		[ "\\begin{figure}[#{(opts[:align].nil? ? 'h' : 'htb')}]",
 		  "  \\centering",
 		  "  \\lwincludegraphics[#{styling}]{#{opts[:src].gsub(/[^\\]/, '\_')}}",
 		 ("  \\caption{#{escape opts[:title]}}" if opts[:title]),
