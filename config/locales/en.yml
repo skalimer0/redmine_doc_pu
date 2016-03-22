@@ -89,6 +89,7 @@ en:
   field_latex_table_of_contents: "LaTeX Table of Contents"
   field_latex_list_of_figures: "LaTeX list of Figures"
   field_latex_list_of_tables: "LaTeX list of Tables"
+  field_latex_generate_index: "LaTeX Index"
   info_latex_list_of_listings: "Generate List of Listings"
   info_latex_list_of_figures: "Generate List of Figures"
   info_latex_list_of_tables: "Generate List of Tables"
