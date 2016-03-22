@@ -60,7 +60,7 @@ module RedCloth::Formatters::LATEX_EX
 		# Build latex code
 		[ "\\begin{figure}[#{(opts[:align].nil? ? 'H' : 'htb')}]",
 		  "  \\centering",
-		  "  \\lwincludegraphics[#{styling}]{#{opts[:src]}}",
+		  "  \\lwincludegraphics[#{styling}]{#{opts[:src].gsub(/[^\\]/, '\_')}}",
 		 ("  \\caption{#{escape opts[:title]}}" if opts[:title]),
 		 ("  \\label{#{opts[:alt]}}" if opts[:alt]),
 		  "\\end{figure}",
