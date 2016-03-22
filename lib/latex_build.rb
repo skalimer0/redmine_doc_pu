@@ -100,12 +100,18 @@ module ModuleLatexBuild
 			File.delete(name + '.log') if File.exist?(name + '.log')
 			File.delete(name + '.out') if File.exist?(name + '.out')
 			File.delete(name + '.toc') if File.exist?(name + '.toc')
+                        File.delete(name + '.lol') if File.exist?(name + '.lol')
+                        File.delete(name + '.lot') if File.exist?(name + '.lot')
+                        File.delete(name + '.pyg') if File.exist?(name + '.pyg')
 
 			# Add build log message
 			self.build_log = [
 				"delete file #{name}.aux",
 				"delete file #{name}.idx",
 				"delete file #{name}.lof",
+                                "delete file #{name}.lot",
+                                "delete file #{name}.lol",
+                                "delete file #{name}.pyg",
 				"delete file #{name}.log",
 				"delete file #{name}.out",
 				"delete file #{name}.toc"]
