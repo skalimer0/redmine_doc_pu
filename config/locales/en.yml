@@ -85,4 +85,12 @@ en:
   info_chapter_name: "Wiki page name is used if left blank"
   info_use_doc_flags: "Derive LaTeX build flags from document"
   info_build_latex_multiple_times: "To update all references and the index the document have to be built 2 or 3 times."
-  
+  field_latex_list_of_listings: "LaTeX List of Listings"
+  field_latex_table_of_contents: "LaTeX Table of Contents"
+  field_latex_list_of_figures: "LaTeX list of Figures"
+  field_latex_list_of_tables: "LaTeX list of Tables"
+  info_latex_list_of_listings: "Generate List of Listings"
+  info_latex_list_of_figures: "Generate List of Figures"
+  info_latex_list_of_tables: "Generate List of Tables"
+  info_latex_table_of_contents: "Generate Table of Contents"
+  info_latex_generate_index: "Compile Index from Index entries"
