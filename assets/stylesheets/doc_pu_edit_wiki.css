@@ -1,7 +1,9 @@
 .doc_pu_edit_table {
-    width: 80%;
+    width: 100%;
     border-collapse:collapse;
 }
 .doc_pu_edit_table_column {
     width: 50%;
+    vertical-align: top;
 }
+
