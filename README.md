@@ -1,3 +1,7 @@
+# ISSUES
+   * Edit wiki page entry; does not allow changing the chapter title
+
+
 > **Fair warning:** I had to break the compability for MikTeX, and propably other Windows LaTeX distros, since I needed to get this plugin work - in short time. So, in the time being - please use the *vvmruder*'s version for Windows platform. You will probably get where you want much easier.
 > 
 >  -- Tommi
