@@ -27,20 +27,21 @@
 \usepackage{tabularx}
 \usepackage{footnote}
 \usepackage{scrhack}
+\usepackage{listings}
 \makesavenoteenv{tabularx}
 
-\SetupFloatingEnvironment{listing}{name=Code-Beispiel}
-\SetupFloatingEnvironment{listing}{listname=Code-Verzeichnis}
+%\SetupFloatingEnvironment{listing}{name=Code-Beispiel}
+%\SetupFloatingEnvironment{listing}{listname=Code-Verzeichnis}
 
-\newenvironment{code}{\captionsetup{type=listing,belowskip=12pt,aboveskip=4pt}}{}
+%\newenvironment{code}{\captionsetup{type=listing,belowskip=12pt,aboveskip=4pt}}{}
 
-\newcommand{\lwincludegraphics}[2][]{%
-  \sbox{0}{\includegraphics[#1]{#2}}%
-  \ifdim\wd0>\linewidth
-    \resizebox{\linewidth}{!}{\box0 }%
-  \else
-    \leavevmode\box0
-  \fi}
+%% \newcommand{\lwincludegraphics}[2][]{%
+%%   \sbox{0}{\includegraphics[#1]{#2}}%
+%%   \ifdim\wd0>\linewidth
+%%     \resizebox{\linewidth}{!}{\box0 }%
+%%   \else
+%%     \leavevmode\box0
+%%   \fi}
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
