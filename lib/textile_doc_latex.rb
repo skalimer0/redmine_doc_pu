@@ -31,9 +31,9 @@ module RedCloth::Formatters::LATEX_EX
   end
 
   def table_close(opts)
-    self.tablecounter = 1 unless defined? self.tablecounter
-    number = self.tablecounter
-    self.tablecounter = self.tablecounter + 1
+    @tablecounter = 1 unless defined? @tablecounter
+    number = @tablecounter
+    @tablecounter = @tablecounter + 1
     output = "\\begin{savenotes}\n"
     output << "\\begin{table}[h]\n"
     output << "  \\centering\n"
@@ -57,20 +57,41 @@ module RedCloth::Formatters::LATEX_EX
   def image(opts)
     opts[:alt] = opts[:src] unless defined? opts[:alt]
     # Don't know how to use remote links, plus can we trust them?
-    return '' if opts[:src] =~ /^\w+\:\/\//
-    # Resolve CSS styles if any have been set
-    styling = opts[:class].to_s.split(/\s+/).collect { |style| latex_image_styles[style] }.compact.join ','
-
-    styling = "width=0.7\\textwidth" unless defined? styling
-    
-    # Build latex code
-    [ "\\begin{figure}[#{(opts[:align].nil? ? 'h' : 'htb')}]",
-      "  \\centering",
-      "  \\lwincludegraphics[#{styling}]{#{opts[:src]}}",
-      ("  \\caption{#{escape opts[:title]}}" if opts[:title]),
-      ("  \\label{#{opts[:alt]}}" if opts[:alt]),
-      "\\end{figure}",
-    ].compact.join "\n"
+    if opts[:src] =~ /^\w+\:\/\//
+      title = "Remote content not shown. Click link to see it."
+      [
+        "\\begin{figure}[#{(opts[:align].nil? ? 'h' : 'htb')}]",
+        "  \\centering",
+        "  \\fbox{\\url{#{opts[:src]}}}",
+        "  \\caption{#{title}}",
+        ("  \\label{#opts[:alt]}}" if opts[:alt]),
+        "\\end{figure}",
+      ].compact.join "\n"
+    else
+      # Resolve CSS styles if any have been set
+      styling = opts[:class].to_s.split(/\s+/).collect { |style| latex_image_styles[style] }.compact.join ','
+      
+      styling = "width=0.7\\textwidth" if styling.nil? or styling =~ /^$/
+      title = opts[:title].nil? ? "Figure" : opts[:title]
+      title = escape title
+      
+      [
+        "\\begin{figure}[#{(opts[:align].nil? ? 'h' : 'htb')}]",
+        "  \\centering",
+        "  \\includegraphics[#{styling}]{#{opts[:src]}}",
+        "  \\caption{#{title}}",
+        ("  \\label{#opts[:alt]}}" if opts[:alt]),
+        "\\end{figure}",
+      ].compact.join "\n"
+    end
+    #    # Build latex code
+    #    [ "\\begin{figure}[#{(opts[:align].nil? ? 'h' : 'htb')}]",
+    #      "  \\centering",
+    #      "  \\lwincludegraphics[#{styling}]{#{opts[:src]}}",
+    #      ("  \\caption{#{escape opts[:title]}}" if opts[:title]),
+    #      ("  \\label{#{opts[:alt]}}" if opts[:alt]),
+    #      "\\end{figure}",
+    #    ].compact.join "\n"
   end
   
 end
@@ -80,6 +101,7 @@ module RedClothExtensionLatex
   # http://stackoverflow.com/questions/12493128/regex-replace-text-but-exclude-when-text-is-between-specific-tag
 
   def latex_code(text)
+    @listingcounter = 1 unless defined? @listingcounter
     text.gsub!(/<pre>(.*?)<\/pre>/im) do |_|
       code = $1
       code.match(/<code\s+class="(.*)">(.*)<\/code>/im)
@@ -88,14 +110,29 @@ module RedClothExtensionLatex
 	code = $2
 	lang = "language={#{$1}}"
       end
+      listingcount = @listingcounter
+      @listingcounter = @listingcounter + 1
+      
       #minted_settings = %W(mathescape linenos numbersep=5pt frame=lines framesep=2mm tabsize=4 fontsize=\\footnotesize breaklines breakanywhere)
       #.join(",")
       if lang == '{}'
-      #latex_code_text = "<notextile>\n\\begin{code}\n\\begin{minted}\n[#{minted_settings}]\n#{lang}\n#{code}\n\\end{minted}\n\\caption{}\n\\end{code}\n</notextile>\n"
-        latex_code_text = "<notextile>\n\\begin{lstlisting}\n#{code}\n\\caption{}\n\\end{lstlisting}\n"
+        latex_code_text = [
+          "<notextile>",
+          "\\begin{lstlisting}",
+          "#{code}",
+          "\\end{lstlisting}",
+          "\\caption{Listing #{listingcount}}",
+          "</notextile>"
+        ].compact.join "\n"
       else
-        latex_code_text = "<notextile>\n\\begin[#{lang}]{lstlisting}\n#{code}\n\\caption{}\n\\end{lstlisting}\n"
-	#latex_code_text = "<notextile>\n\\begin{code}\n\\begin{minted}\n[#{minted_settings}]\n#{lang}\n#{code}\n\\end{minted}\n\\caption{}\n\\end{code}\n</notextile>\n"
+        latex_code_text = [
+          "<notextile>",
+          "\\begin[#{lang}]{lstlisting}",
+          "#{code}",
+          "\\end{lstlisting}",
+          "\\caption{Listing #{listingcount}}",
+          "</notextile>"
+        ].compact.join "\n"
       end
       latex_code_text
     end
@@ -107,8 +144,8 @@ module RedClothExtensionLatex
     text.gsub!(/(\s|^)\[\[(.*?)(\|(.*?)|)\]\]/i) do |_|
       var = $2
       label = $4
-      label = var unless defined? label
-      "<notextile> #{label} \\ref{#{var}}</notextile>"
+      label = var if label.nil? or label =~ /^\s*$/      
+      "<notextile> \\textsl{#{label.gsub('_', ' ')}}\\fbox{\\ref{page:#{var}}}</notextile>"
     end
   end
   
