@@ -1,3 +1,7 @@
+ISSUES
+* wiki format:  (bold)[[url][teksti]](/bold) korvataan väärin -> \textbf{\href{url}{Label}}
+* \index{(space)teksti}, eli tuuppaa ylimääräisen välilyönniin 
+
 
 > **Fair warning:** I had to break the compability for MikTeX, and propably other Windows LaTeX distros, since I needed to get this plugin work - in short time. So, in the time being - please use the *vvmruder*'s version for Windows platform. You will probably get where you want much easier.
 > 

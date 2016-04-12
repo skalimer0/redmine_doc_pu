@@ -118,19 +118,23 @@ module RedClothExtensionLatex
       if lang == '{}'
         latex_code_text = [
           "<notextile>",
+          "\\begin{code}",
           "\\begin{lstlisting}",
           "#{code}",
           "\\end{lstlisting}",
           "\\caption{Listing #{listingcount}}",
+          "\\end{code}",
           "</notextile>"
         ].compact.join "\n"
       else
         latex_code_text = [
           "<notextile>",
+          "\\begin{code}",
           "\\begin[#{lang}]{lstlisting}",
           "#{code}",
           "\\end{lstlisting}",
           "\\caption{Listing #{listingcount}}",
+          "\\end{code}",
           "</notextile>"
         ].compact.join "\n"
       end
