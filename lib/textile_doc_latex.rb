@@ -56,12 +56,14 @@ module RedCloth::Formatters::LATEX_EX
 
   def image(opts)
     opts[:alt] = opts[:src] unless defined? opts[:alt]
-    # Don't know how to use remote links, plus can we trust them?
+    # Don't know how to use remote links, plus can we trust them? Propably
+    # not, so let's remove them with notice.
     if opts[:src] =~ /^\w+\:\/\//
-      title = "Remote content not shown. Click link to see it."
+      title = "Removed iamge"
       [
         "\\begin{figure}[#{(opts[:align].nil? ? 'h' : 'htb')}]",
         "  \\centering",
+        "Remote content not shown due to security policy. Click link to see it.\\\\",
         "  \\fbox{\\url{#{opts[:src]}}}",
         "  \\caption{#{title}}",
         ("  \\label{#opts[:alt]}}" if opts[:alt]),
