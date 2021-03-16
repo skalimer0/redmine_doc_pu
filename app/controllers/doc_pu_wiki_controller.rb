@@ -2,7 +2,7 @@ class DocPuWikiController < ApplicationController
 	unloadable
 	layout 'base'
 	menu_item :doc_pu_menu
-	before_filter :find_project, :find_doc_pu_document
+	before_action :find_project, :find_doc_pu_document
 
 	# Show all wiki pages
 	def index
