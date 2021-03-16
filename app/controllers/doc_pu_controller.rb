@@ -5,7 +5,7 @@ class DocPuController < ApplicationController
 	layout 'base'
 	menu_item :doc_pu_menu
 	#before_filter :find_project
-	before_filter :find_project, :authorize
+	before_action :find_project, :authorize
 	#, :only => [:build, :new, :edit]
 	
 	# Show all documents
