@@ -1,4 +1,4 @@
-class CreateDocPuWikiPages < ActiveRecord::Migration
+class CreateDocPuWikiPages < ActiveRecord::Migration[5.2]
 	def self.up
 		create_table :doc_pu_wiki_pages do |t|
 			t.references :wiki_page

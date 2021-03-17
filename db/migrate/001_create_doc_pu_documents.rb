@@ -1,4 +1,4 @@
-class CreateDocPuDocuments < ActiveRecord::Migration
+class CreateDocPuDocuments < ActiveRecord::Migration[5.2]
 	def self.up
 		create_table :doc_pu_documents do |t|
 			t.column :name, :string
